@@ -4,7 +4,7 @@
       <el-col style="margin-bottom: 10px">
         <el-card class="box-card" shadow="never">
           <div slot="header" class="clearfix">
-            <span class="role-span">字段配置：{{ tableName }}</span>
+            <span class="role-span">Field Configuration: {{ tableName }}</span>
             <el-button
               :loading="genLoading"
               icon="el-icon-s-promotion"
@@ -12,7 +12,7 @@
               style="float: right; padding: 6px 9px;"
               type="success"
               @click="toGen"
-            >保存&生成</el-button>
+            >Save & Generate</el-button>
             <el-button
               :loading="columnLoading"
               icon="el-icon-check"
@@ -21,7 +21,7 @@
               type="primary"
               @click="saveColumnConfig"
             >保存</el-button>
-            <el-tooltip class="item" effect="dark" content="数据库中表字段变动时使用该功能" placement="top-start">
+            <el-tooltip class="item" effect="dark" content="Use this feature when table fields change in the database" placement="top-start">
               <el-button
                 :loading="syncLoading"
                 icon="el-icon-refresh"
@@ -29,62 +29,62 @@
                 style="float: right; padding: 6px 9px;"
                 type="info"
                 @click="sync"
-              >同步</el-button>
+              >Sync</el-button>
             </el-tooltip>
           </div>
           <el-form size="small" label-width="90px">
             <el-table v-loading="loading" :data="data" :max-height="tableHeight" size="small" style="width: 100%;margin-bottom: 15px">
-              <el-table-column prop="columnName" label="字段名称" />
-              <el-table-column prop="columnType" label="字段类型" />
-              <el-table-column prop="remark" label="字段描述">
+              <el-table-column prop="columnName" label="Field Name" />
+              <el-table-column prop="columnType" label="Field Type" />
+              <el-table-column prop="remark" label="Field Description">
                 <template slot-scope="scope">
                   <el-input v-model="data[scope.$index].remark" size="mini" class="edit-input" />
                 </template>
               </el-table-column>
-              <el-table-column align="center" label="必填" width="70px">
+              <el-table-column align="center" label="Required" width="70px">
                 <template slot-scope="scope">
                   <el-checkbox v-model="data[scope.$index].notNull" />
                 </template>
               </el-table-column>
-              <el-table-column align="center" label="列表" width="70px">
+              <el-table-column align="center" label="List" width="70px">
                 <template slot-scope="scope">
                   <el-checkbox v-model="data[scope.$index].listShow" />
                 </template>
               </el-table-column>
-              <el-table-column align="center" label="表单" width="70px">
+              <el-table-column align="center" label="Form" width="70px">
                 <template slot-scope="scope">
                   <el-checkbox v-model="data[scope.$index].formShow" />
                 </template>
               </el-table-column>
-              <el-table-column label="表单类型">
+              <el-table-column label="Form Type">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].formType" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select v-model="data[scope.$index].formType" filterable class="edit-input" clearable size="mini" placeholder="Please select">
                     <el-option
-                      label="文本框"
+                      label="Text Box"
                       value="Input"
                     />
                     <el-option
-                      label="文本域"
+                      label="Text Area"
                       value="Textarea"
                     />
                     <el-option
-                      label="单选框"
+                      label="Radio Button"
                       value="Radio"
                     />
                     <el-option
-                      label="下拉框"
+                      label="Drop-down Box"
                       value="Select"
                     />
                     <el-option
-                      label="日期框"
+                      label="Date"
                       value="Date"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="查询方式">
+              <el-table-column label="Query Type">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].queryType" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select v-model="data[scope.$index].queryType" filterable class="edit-input" clearable size="mini" placeholder="Please select">
                     <el-option
                       label="="
                       value="="
@@ -116,23 +116,23 @@
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="日期注解">
+              <el-table-column label="Date Annotation">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].dateAnnotation" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select v-model="data[scope.$index].dateAnnotation" filterable class="edit-input" clearable size="mini" placeholder="Please select">
                     <el-option
-                      label="自动创建时间"
+                      label="Auto Create Time"
                       value="CreationTimestamp"
                     />
                     <el-option
-                      label="自动更新时间"
+                      label="Auto Update Time"
                       value="UpdateTimestamp"
                     />
                   </el-select>
                 </template>
               </el-table-column>
-              <el-table-column label="关联字典">
+              <el-table-column label="Related Dictionary">
                 <template slot-scope="scope">
-                  <el-select v-model="data[scope.$index].dictName" filterable class="edit-input" clearable size="mini" placeholder="请选择">
+                  <el-select v-model="data[scope.$index].dictName" filterable class="edit-input" clearable size="mini" placeholder="Please select">
                     <el-option v-for="item in dicts" :key="item.id" :label="item.remark === '' ? item.name : item.remark" :value="item.name" />
                   </el-select>
                 </template>
@@ -144,7 +144,7 @@
       <el-col>
         <el-card class="box-card" shadow="never">
           <div slot="header" class="clearfix">
-            <span class="role-span">生成配置</span>
+            <span class="role-span">Generation Configuration</span>
             <el-button
               :loading="configLoading"
               icon="el-icon-check"
@@ -155,40 +155,40 @@
             >保存</el-button>
           </div>
           <el-form ref="form" :model="form" :rules="rules" size="small" label-width="78px">
-            <el-form-item label="作者名称" prop="author">
+            <el-form-item label="Author" prop="author">
               <el-input v-model="form.author" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">类上面的作者名称</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">Author name in the class header</span>
             </el-form-item>
-            <el-form-item label="模块名称" prop="moduleName">
+            <el-form-item label="Module Name" prop="moduleName">
               <el-input v-model="form.moduleName" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">模块的名称，请选择项目中已存在的模块</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">Module name, please select an existing module in the project</span>
             </el-form-item>
-            <el-form-item label="至于包下" prop="pack">
+            <el-form-item label="Package" prop="pack">
               <el-input v-model="form.pack" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">项目包的名称，生成的代码放到哪个包里面</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">Project package name, where the generated code will be placed</span>
             </el-form-item>
-            <el-form-item label="接口名称" prop="apiAlias">
+            <el-form-item label="API Alias" prop="apiAlias">
               <el-input v-model="form.apiAlias" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">接口的名称，用于控制器与接口文档中</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">API name, used in controllers and API documentation</span>
             </el-form-item>
-            <el-form-item label="前端路径" prop="path">
+            <el-form-item label="Frontend Path" prop="path">
               <el-input v-model="form.path" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">输入views文件夹下的目录，不存在即创建</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">Enter the directory under the views folder, it will be created if it doesn't exist</span>
             </el-form-item>
             <!--            <el-form-item label="接口目录">-->
             <!--              <el-input v-model="form.apiPath" style="width: 40%" />-->
             <!--              <span style="color: #C0C0C0;margin-left: 10px;">Api存放路径[src/api]，为空则自动生成路径</span>-->
             <!--            </el-form-item>-->
-            <el-form-item label="去表前缀" prop="prefix">
-              <el-input v-model="form.prefix" placeholder="默认不去除表前缀" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">默认不去除表前缀，可自定义</span>
+            <el-form-item label="Table Prefix" prop="prefix">
+              <el-input v-model="form.prefix" placeholder="No table prefix by default" style="width: 40%" />
+              <span style="color: #C0C0C0;margin-left: 10px;">No table prefix by default, can be customized</span>
             </el-form-item>
-            <el-form-item label="是否覆盖" prop="cover">
+            <el-form-item label="Overwrite" prop="cover">
               <el-radio-group v-model="form.cover" size="mini" style="width: 40%">
-                <el-radio-button label="true">是</el-radio-button>
-                <el-radio-button label="false">否</el-radio-button>
+                <el-radio-button label="true">Yes</el-radio-button>
+                <el-radio-button label="false">No</el-radio-button>
               </el-radio-group>
-              <span style="color: #C0C0C0;margin-left: 10px;">谨防误操作，请慎重选择</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">Be careful with this operation, please choose carefully</span>
             </el-form-item>
           </el-form>
         </el-card>
