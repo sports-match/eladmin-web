@@ -212,22 +212,22 @@ export default {
       form: { id: null, tableName: '', author: '', pack: '', path: '', moduleName: '', cover: 'false', apiPath: '', prefix: '', apiAlias: null },
       rules: {
         author: [
-          { required: true, message: '作者不能为空', trigger: 'blur' }
+          { required: true, message: 'Author cannot be empty', trigger: 'blur' }
         ],
         pack: [
-          { required: true, message: '包路径不能为空', trigger: 'blur' }
+          { required: true, message: 'Package path cannot be empty', trigger: 'blur' }
         ],
         moduleName: [
-          { required: true, message: '包路径不能为空', trigger: 'blur' }
+          { required: true, message: 'Module name cannot be empty', trigger: 'blur' }
         ],
         path: [
-          { required: true, message: '前端路径不能为空', trigger: 'blur' }
+          { required: true, message: 'Frontend path cannot be empty', trigger: 'blur' }
         ],
         apiAlias: [
-          { required: true, message: '接口名称不能为空', trigger: 'blur' }
+          { required: true, message: 'API name cannot be empty', trigger: 'blur' }
         ],
         cover: [
-          { required: true, message: '不能为空', trigger: 'blur' }
+          { required: true, message: 'Cannot be empty', trigger: 'blur' }
         ]
       }
     }
