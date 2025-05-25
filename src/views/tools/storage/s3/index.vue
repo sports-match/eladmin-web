@@ -14,16 +14,16 @@
         <template slot="left">
           <!-- 上传 -->
           <el-button class="filter-item" size="mini" type="primary" icon="el-icon-upload" @click="dialog = true">上传</el-button>
-          <!-- 同步 -->
-          <el-button :icon="icon" class="filter-item" size="mini" type="warning" @click="synchronize">同步</el-button>
-          <!-- 配置 -->
+          <!-- 同步 S3 数据 -->
+          <el-button :icon="icon" class="filter-item" size="mini" type="warning" @click="synchronize">同步 S3 数据</el-button>
+          <!-- S3 配置 -->
           <el-button
             class="filter-item"
             size="mini"
             type="success"
             icon="el-icon-s-tools"
             @click="doConfig"
-          >配置</el-button>
+          >S3 配置</el-button>
         </template>
       </crudOperation>
       <!-- 文件上传 -->
@@ -34,7 +34,7 @@
           :on-error="handleError"
           :file-list="fileList"
           :headers="headers"
-          :action="qiNiuUploadApi"
+          :action="s3UploadApi"
           class="upload-demo"
           multiple
         >
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import crudQiNiu from '@/api/tools/qiniu'
+import crudS3 from '@/api/tools/s3'
 import { mapGetters } from 'vuex'
 import { getToken } from '@/utils/auth'
 import eForm from './form'
@@ -79,7 +79,7 @@ import DateRangePicker from '@/components/DateRangePicker'
 export default {
   components: { eForm, pagination, crudOperation, rrOperation, DateRangePicker },
   cruds() {
-    return CRUD({ title: '七牛云文件', url: 'api/qiNiuContent', crudMethod: { ...crudQiNiu }})
+    return CRUD({ title: 'S3 文件存储', url: 'api/s3Content', crudMethod: { ...crudS3 }})
   },
   mixins: [presenter(), header(), crud()],
   data() {
@@ -87,7 +87,7 @@ export default {
       permission: {
         del: ['admin', 'storage:del']
       },
-      title: '文件', dialog: false,
+      title: 'S3 文件', dialog: false,
       icon: 'el-icon-refresh',
       url: '', headers: { 'Authorization': getToken() },
       dialogImageUrl: '', dialogVisible: false, fileList: [], files: [], newWin: null
@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'qiNiuUploadApi'
+      's3UploadApi'
     ])
   },
   watch: {
@@ -128,7 +128,7 @@ export default {
     handleBeforeRemove(file, fileList) {
       for (let i = 0; i < this.files.length; i++) {
         if (this.files[i].uid === file.uid) {
-          crudQiNiu.del([this.files[i].id]).then(res => {})
+          crudS3.del([this.files[i].id]).then(res => {})
           return true
         }
       }
@@ -155,7 +155,7 @@ export default {
       this.downloadLoading = true
       // 先打开一个空的新窗口，再请求
       this.newWin = window.open()
-      crudQiNiu.download(id).then(res => {
+      crudS3.download(id).then(res => {
         this.downloadLoading = false
         this.url = res.url
       }).catch(err => {
@@ -166,7 +166,7 @@ export default {
     // 同步数据
     synchronize() {
       this.icon = 'el-icon-loading'
-      crudQiNiu.sync().then(res => {
+      crudS3.sync().then(res => {
         this.icon = 'el-icon-refresh'
         this.$message({
           showClose: true,
