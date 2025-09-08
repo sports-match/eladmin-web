@@ -34,11 +34,11 @@ export default {
     },
     startPlaceholder: {
       type: String,
-      default: '开始日期'
+      default: 'Start Date'
     },
     endPlaceholder: {
       type: String,
-      default: '结束日期'
+      default: 'End Date'
     }
   }
 }
